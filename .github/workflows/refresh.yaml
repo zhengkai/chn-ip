@@ -1,0 +1,42 @@
+name: Update List
+
+on: 
+  schedule:
+    - cron:  '16 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Init
+        run: |
+          git config --global user.email "bot@soulogic.com"
+          git config --global user.name "Zheng Kai"
+
+      - name: Checkout Repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          path: .
+
+      - name: Refresh
+        run: ./script/run.sh 
+
+      - name: Publish
+        run: |
+          git add .
+          git status --short
+          git commit -m "Update dist $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || echo "No changes"
+
+      - name: Squash Commit
+        run: |
+          ./script/squash-git.sh 
+
+      - name: Push
+        run: |
+          git push --force
