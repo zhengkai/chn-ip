@@ -2,7 +2,7 @@ name: Update List
 
 on: 
   schedule:
-    - cron:  '16 8 * * 1,3,5'
+    - cron:  '16 8 * * *'
   workflow_dispatch:
 
 jobs:
