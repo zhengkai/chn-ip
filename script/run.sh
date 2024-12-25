@@ -1,13 +1,12 @@
-#!/bin/bash
+#!/bin/bash -ex
 
-cd "$(dirname "$0")" || exit 1
+cd "$(dirname "$0")"
 
 URL="http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
 FILE="apnic.txt"
 
-if [ ! -f "$FILE" ]; then
-	wget "$URL" -O "$FILE" || exit 1
-fi
+ls
+wget "$URL" -O "$FILE"
 
 grep ipv4 "$FILE" | grep CN | awk -F\| '{ printf("%s/%d\n", $4, 32-log($5)/log(2)) }' \
 	> tmp.txt
