@@ -24,3 +24,4 @@ DATE=$(TZ="Asia/Shanghai" date -d @"$TS" '+%Y-%m-%d %H:%M:%S')
 
 export DATE
 envsubst < ./tpl.html > ../index.html
+envsubst < ./tpl.md > ../README.md
